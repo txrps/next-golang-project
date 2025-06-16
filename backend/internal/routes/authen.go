@@ -6,7 +6,7 @@ import (
 )
 
 func SetupAuthRoutes(r *gin.Engine, handler *handlers.Handler) {
-	authen := r.Group("/authen")
+	authen := r.Group("/api/authen")
 	{
 		authen.POST("/register", handler.RegisterHandler())
 		authen.POST("/login", handler.LoginHandler())

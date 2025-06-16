@@ -1,14 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
-
 export default function Home() {
-  useEffect(() => {
-    fetch("http://localhost:8080/api/users")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, []);
+  //// const GetApi = async () => {
+  ////   const user = await httpClient.get("/api/proxy/test");
+  ////   console.log("user", user);
+  //// };
+
+  //// const postData = {
+  ////   username: "ttxrps",
+  //// };
+
+  //// const Login = async () => {
+  ////   const user = await httpClient.post("api/proxy/authen/login", postData);
+  ////   console.log("user", user);
+  //// };
+
+  //// const Logout = async () => {
+  ////   const user = await httpClient.post("api/proxy/authen/logout", postData);
+  ////   console.log("user", user);
+  //// };
+  //// useEffect(() => {
+  ////   // GetApi();
+  ////   Logout()
+  //// }, []);
   return <>test</>;
 }
