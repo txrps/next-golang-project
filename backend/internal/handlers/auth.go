@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/txrps/next-golang-project/internal/utils"
+	"github.com/txrps/next-golang-project/models"
 	"gorm.io/gorm"
 )
 
@@ -12,19 +13,10 @@ const (
 	usernameCondition = "username = ?"
 )
 
-type User struct {
-	ID           uint   `json:"id" gorm:"primaryKey"`
-	Username     string `json:"username" binding:"required"`
-	Email        string `json:"email" binding:"required,email"`
-	Password     string `json:"password" binding:"required"`
-	SessionToken string `json:"session_token"`
-	CRSFToken    string `json:"crsf_token"`
-}
-
 // POST /auth/register
 func (h *Handler) RegisterHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var user User
+		var user models.User
 		if err := c.ShouldBindJSON(&user); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -37,7 +29,7 @@ func (h *Handler) RegisterHandler() gin.HandlerFunc {
 			return
 		}
 
-		var existingUser User
+		var existingUser models.User
 		if err := h.DB.Where(usernameCondition, user.Username).First(&existingUser).Error; err == nil {
 			c.JSON(http.StatusConflict, gin.H{"error": "Username already exists."})
 			return
@@ -67,18 +59,14 @@ func (h *Handler) RegisterHandler() gin.HandlerFunc {
 
 // POST /auth/login
 func (h *Handler) LoginHandler() gin.HandlerFunc {
-	type loginRequest struct {
-		Username string `json:"username" binding:"required"`
-		Password string `json:"password" binding:"required"`
-	}
 	return func(c *gin.Context) {
-		var req loginRequest
+		var req models.LoginRequest
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		var user User
+		var user models.User
 		if err := h.DB.Where(usernameCondition, req.Username).First(&user).Error; err != nil {
 			if err == gorm.ErrRecordNotFound {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username"})
@@ -150,7 +138,7 @@ func (h *Handler) LoginHandler() gin.HandlerFunc {
 // Post /auth/login
 func (h *Handler) ProtectedHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req AuthRequest
+		var req models.AuthRequest
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -167,14 +155,10 @@ func (h *Handler) ProtectedHandler() gin.HandlerFunc {
 	}
 }
 
-type AuthRequest struct {
-	Username string `json:"username" binding:"required"`
-}
-
 // Post /auth/logout
 func (h *Handler) LogoutHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req AuthRequest
+		var req models.AuthRequest
 		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -215,7 +199,7 @@ func (h *Handler) LogoutHandler() gin.HandlerFunc {
 			false,
 		)
 
-		var user User
+		var user models.User
 		if err := h.DB.Where(usernameCondition, req.Username).First(&user).Error; err != nil {
 			if err == gorm.ErrRecordNotFound {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})

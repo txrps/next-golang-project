@@ -49,10 +49,6 @@ func GenerateJWT(userID int64, username string) (string, error) {
 	return token.SignedString(secretKey)
 }
 
-type AuthRequest struct {
-	Username string `json:"username" binding:"required"`
-}
-
 type User struct {
 	ID           uint   `json:"id" gorm:"primaryKey"`
 	Username     string `json:"username" binding:"required"`
