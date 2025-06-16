@@ -10,5 +10,7 @@ func SetupAuthRoutes(r *gin.Engine, handler *handlers.Handler) {
 	{
 		authen.POST("/register", handler.RegisterHandler())
 		authen.POST("/login", handler.LoginHandler())
+		authen.POST("/protected", handler.ProtectedHandler())
+		authen.POST("/logout", handler.LogoutHandler())
 	}
 }
