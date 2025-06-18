@@ -1,5 +1,9 @@
 package models
 
+type TbUser struct {
+	ID uint `json:"id" gorm:"primaryKey"`
+}
+
 type User struct {
 	ID           uint   `json:"id" gorm:"primaryKey"`
 	Username     string `json:"username" binding:"required"`

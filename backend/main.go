@@ -1,4 +1,3 @@
-// backend/main.go
 package main
 
 import (
@@ -8,10 +7,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 	"time"
 
+	_ "github.com/txrps/next-golang-project/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/txrps/next-golang-project/config"
 	"github.com/txrps/next-golang-project/database"
 	"github.com/txrps/next-golang-project/internal/handlers"
@@ -29,6 +34,27 @@ const (
 	errLoadConfigMessage     = "Failed to load config %v"
 )
 
+//go:generate swag init --output docs --parseDependency
+
+// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api
+
+// @securityDefinitions.basic  BasicAuth
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
 	config, err := config.LoadConfig()
 	if err != nil {
@@ -46,7 +72,6 @@ func main() {
 	r := router()
 
 	handler := handlers.NewHandler(db)
-
 	routes.SetUpRoutes(r, handler)
 
 	serverAddr := fmt.Sprintf(":%s", config.ServerPort)
@@ -59,11 +84,51 @@ func main() {
 		MaxHeaderBytes:    1 << 20,
 	}
 
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	fmt.Printf("Server is up and running on PORT %s\n", serverAddr)
+	if config.Environment == "development" {
+		time.Sleep(1 * time.Second)
+		openBrowser("http://localhost:" + config.ServerPort + "/swagger/index.html")
+	}
+
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("Server failed %v", err)
 	}
 
+}
+
+func openBrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "windows":
+		chromePaths := []string{
+			`C:\Program Files\Google\Chrome\Application\chrome.exe`,
+			`C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`,
+		}
+		var chromeOpened = false
+
+		for _, path := range chromePaths {
+			if _, statErr := os.Stat(path); statErr == nil {
+				err = exec.Command(path, url).Start()
+				chromeOpened = true
+				break
+			}
+		}
+
+		if !chromeOpened {
+			err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+		}
+	case "darwin": // macOS
+		err = exec.Command("open", url).Start()
+	default: // Linux, Unix-like
+		err = exec.Command("xdg-open", url).Start()
+	}
+
+	if err != nil {
+		log.Printf("Failed to open browser: %v\n", err)
+	}
 }
 
 func generateDB(DB *gorm.DB) {

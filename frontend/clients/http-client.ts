@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
-
-const BASE_URL = "http://localhost:3000/"
+import https from 'https'
 
 export const decodeKeyCloakToken = (ctx?: any): string | null => {
   const token = getCookie("jwt_token", ctx)
@@ -21,87 +21,86 @@ export const decodeKeyCloakToken = (ctx?: any): string | null => {
   return decoded.preferred_username ?? null
 }
 
-
-type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
-
-type RequestOptions = {
-  method?: RequestMethod
-  headers?: HeadersInit
-  body?: any
-}
-
 class HttpClient {
-  private static _instance: HttpClient
+  private readonly baseURL: string
+  private readonly httpsAgent: https.Agent
 
-  public static get instance(): HttpClient {
-    if (!this._instance) {
-      this._instance = new HttpClient()
-    }
-    return this._instance
+  constructor() {
+    this.baseURL = '/api'
+    this.httpsAgent = new https.Agent({ rejectUnauthorized: false }) // Only used server-side
   }
 
-  private buildHeaders(method: RequestMethod, body?: any): HeadersInit {
-    const headers: HeadersInit = {
+  async request<T>(
+    input: string,
+    options: RequestInit = {},
+  ): Promise<SuccessResponse<T>> {
+    const url = `${this.baseURL}${input}`
+
+    const rawHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
       'redirect_proxy': 'true',
     }
 
-    const token = String(getCookie("jwt_token") || '')
+    const token = getCookie("jwt_token")
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`
+      rawHeaders['Authorization'] = `Bearer ${token}`
 
-      if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
-        const userId = decodeKeyCloakToken(token)
-        if (body && typeof body === 'object') {
-          body.keyCloakUserId = userId
-        }
+      if (
+        options.method &&
+        ['POST', 'PUT', 'PATCH', 'DELETE'].includes(options.method.toUpperCase())
+      ) {
+        const body = options.body ? JSON.parse(options.body.toString()) : {}
+        options.body = JSON.stringify({
+          ...body,
+          keyCloakUserId: decodeKeyCloakToken(token),
+        })
       }
     }
 
-    return headers
-  }
+    const headers: HeadersInit = rawHeaders
 
-  async request<T>(url: string, options: RequestOptions = {}): Promise<SuccessResponse<T>> {
-    const method = (options.method ?? 'GET').toUpperCase() as RequestMethod
-    const body = options.body ? JSON.stringify(options.body) : undefined
-    const headers = this.buildHeaders(method, options.body)
-
-    const response = await fetch(BASE_URL + url, {
-      method,
+    const response = await fetch(url, {
+      ...options,
       headers,
-      body,
+      // @ts-expect-error
+      agent: typeof window === 'undefined' ? this.httpsAgent : undefined, // only server-side
     })
 
-    const json = await response.json()
     if (!response.ok) {
-      throw new Error(json?.message ?? 'API error')
+      const error = await response.json().catch(() => ({}))
+      throw new Error(error.message)
     }
 
-    return json
+    return response.json()
   }
 
   get<T>(url: string) {
     return this.request<T>(url, { method: 'GET' })
   }
 
-  post<T>(url: string, body?: any) {
-    return this.request<T>(url, { method: 'POST', body })
+  post<T>(url: string, data?: any) {
+    return this.request<T>(url, {
+      method: 'POST',
+      body: JSON.stringify(data ?? {}),
+    })
   }
 
-  put<T>(url: string, body?: any) {
-    return this.request<T>(url, { method: 'PUT', body })
+  put<T>(url: string, data?: any) {
+    return this.request<T>(url, {
+      method: 'PUT',
+      body: JSON.stringify(data ?? {}),
+    })
   }
 
-  delete<T>(url: string, body?: any) {
-    return this.request<T>(url, { method: 'DELETE', body })
-  }
-
-  patch<T>(url: string, body?: any) {
-    return this.request<T>(url, { method: 'PATCH', body })
+  delete<T>(url: string, data?: any) {
+    return this.request<T>(url, {
+      method: 'DELETE',
+      body: JSON.stringify(data ?? {}),
+    })
   }
 }
 
-export const httpClient = HttpClient.instance
+export const httpClient = new HttpClient()
 
 export type SuccessResponse<T> = {
   code: number
