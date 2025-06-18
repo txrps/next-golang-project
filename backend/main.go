@@ -16,6 +16,8 @@ import (
 	"github.com/txrps/next-golang-project/database"
 	"github.com/txrps/next-golang-project/internal/handlers"
 	"github.com/txrps/next-golang-project/internal/routes"
+	"gorm.io/gen"
+	"gorm.io/gorm"
 )
 
 const (
@@ -34,6 +36,7 @@ func main() {
 	}
 
 	db := database.ConnectDB(config.DatabaseURL)
+	//// generateDB(db)
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatalf("Failed to get underlying DB: %v", err)
@@ -61,6 +64,19 @@ func main() {
 		log.Fatalf("Server failed %v", err)
 	}
 
+}
+
+func generateDB(DB *gorm.DB) {
+	g := gen.NewGenerator(gen.Config{
+		OutPath: "./models",
+		Mode:    gen.WithoutContext,
+	})
+
+	g.UseDB(DB)
+	g.ApplyBasic(
+		g.GenerateAllTable()...,
+	)
+	g.Execute()
 }
 
 func router() *gin.Engine {

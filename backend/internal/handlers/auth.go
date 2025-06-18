@@ -13,7 +13,7 @@ const (
 	usernameCondition = "username = ?"
 )
 
-// POST /auth/register
+// POST api/auth/register
 func (h *Handler) RegisterHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user models.User
@@ -57,7 +57,7 @@ func (h *Handler) RegisterHandler() gin.HandlerFunc {
 	}
 }
 
-// POST /auth/login
+// POST api/auth/login
 func (h *Handler) LoginHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req models.LoginRequest
@@ -135,16 +135,16 @@ func (h *Handler) LoginHandler() gin.HandlerFunc {
 	}
 }
 
-// Post /auth/login
+// Post api/auth/login
 func (h *Handler) ProtectedHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req models.AuthRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		user, err := utils.ExtractUserFromToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 			return
 		}
 
-		if err := utils.Authorize(c, h.DB, req.Username); err != nil {
+		if err := utils.Authorize(c, h.DB, user); err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			return
 		}
@@ -155,16 +155,16 @@ func (h *Handler) ProtectedHandler() gin.HandlerFunc {
 	}
 }
 
-// Post /auth/logout
+// Post api/auth/logout
 func (h *Handler) LogoutHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req models.AuthRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		username, err := utils.ExtractUserFromToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 			return
 		}
 
-		if err := utils.Authorize(c, h.DB, req.Username); err != nil {
+		if err := utils.Authorize(c, h.DB, username); err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			return
 		}
@@ -200,7 +200,7 @@ func (h *Handler) LogoutHandler() gin.HandlerFunc {
 		)
 
 		var user models.User
-		if err := h.DB.Where(usernameCondition, req.Username).First(&user).Error; err != nil {
+		if err := h.DB.Where(usernameCondition, username).First(&user).Error; err != nil {
 			if err == gorm.ErrRecordNotFound {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 				return

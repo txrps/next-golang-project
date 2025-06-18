@@ -6,12 +6,14 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/txrps/next-golang-project/models"
 	"gorm.io/gorm"
 )
 
@@ -49,18 +51,9 @@ func GenerateJWT(userID int64, username string) (string, error) {
 	return token.SignedString(secretKey)
 }
 
-type User struct {
-	ID           uint   `json:"id" gorm:"primaryKey"`
-	Username     string `json:"username" binding:"required"`
-	Email        string `json:"email" binding:"required,email"`
-	Password     string `json:"password" binding:"required"`
-	SessionToken string `json:"session_token"`
-	CRSFToken    string `json:"crsf_token"`
-}
-
 func Authorize(c *gin.Context, DB *gorm.DB, username string) error {
 	fmt.Printf("username is %s\n", username)
-	var user User
+	var user models.User
 	if err := DB.Where("username = ?", username).First(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username"})
@@ -80,4 +73,40 @@ func Authorize(c *gin.Context, DB *gorm.DB, username string) error {
 	}
 
 	return nil
+}
+
+func ExtractUserFromToken(c *gin.Context) (string, error) {
+	authHeader := c.GetHeader("Authorization")
+	if authHeader == "" {
+		return "", errors.New("missing authorization header")
+	}
+
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		return "", errors.New("invalid authorization header format")
+	}
+
+	tokenStr := parts[1]
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
+		return secretKey, nil
+	})
+
+	if err != nil || !token.Valid {
+		return "", errors.New("invalid token")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", errors.New("cannot parse claims")
+	}
+
+	username, ok := claims["username"].(string)
+	if !ok {
+		return "", errors.New("username not found in token")
+	}
+
+	return username, nil
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'edge' // หรือ 'nodejs' ตามที่ต้องการ (ถ้าใช้ฟีเจอร์ Node.js api)
+export const runtime = 'edge'
 
 export async function GET(req: NextRequest, { params }: { params: { path: string[] } }) {
   return handleProxy(req, params)

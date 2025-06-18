@@ -46,7 +46,7 @@ class HttpClient {
       'redirect_proxy': 'true',
     }
 
-    const token = getCookie("jwt_token")
+    const token = String(getCookie("jwt_token") || '')
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
 
