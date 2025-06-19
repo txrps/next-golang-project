@@ -13,6 +13,7 @@ type Config struct {
 	Environment  string
 	LogLevel     string
 	AllowOrigins string
+	JWTSecret    string
 }
 
 func LoadConfig() (*Config, error) {
@@ -26,6 +27,7 @@ func LoadConfig() (*Config, error) {
 		Environment:  getEnv("ENVIRONMENT", "development"),
 		LogLevel:     getEnv("LOG_LEVEL", "info"),
 		AllowOrigins: getEnv("ALLOW_ORIGINS", "http://localhost:3000"),
+		JWTSecret:    getEnv("JWT_Secret", "secret-jwt"),
 	}, nil
 }
 

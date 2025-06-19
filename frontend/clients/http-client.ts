@@ -1,25 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCookie } from 'cookies-next'
-import { jwtDecode } from 'jwt-decode'
 import https from 'https'
-
-export const decodeKeyCloakToken = (ctx?: any): string | null => {
-  const token = getCookie("jwt_token", ctx)
-
-  if (!token) {
-    return null
-  }
-
-  const tokenString = Array.isArray(token) ? token[0] : token
-
-  if (typeof tokenString !== "string") {
-    return null
-  }
-
-  const decoded = jwtDecode<{ preferred_username?: string }>(tokenString)
-  return decoded.preferred_username ?? null
-}
 
 class HttpClient {
   private readonly baseURL: string
@@ -52,7 +34,6 @@ class HttpClient {
         const body = options.body ? JSON.parse(options.body.toString()) : {}
         options.body = JSON.stringify({
           ...body,
-          keyCloakUserId: decodeKeyCloakToken(token),
         })
       }
     }

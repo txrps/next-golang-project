@@ -62,7 +62,7 @@ func main() {
 	}
 
 	db := database.ConnectDB(config.DatabaseURL)
-	//// generateDB(db)
+	generateDB(db)
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatalf("Failed to get underlying DB: %v", err)
