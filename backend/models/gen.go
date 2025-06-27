@@ -28,7 +28,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		TmProvince:              newTmProvince(db, opts...),
 		TmRole:                  newTmRole(db, opts...),
 		TmRoleMappingPermission: newTmRoleMappingPermission(db, opts...),
-		TmSubdistrict:           newTmSubdistrict(db, opts...),
+		TmSubDistrict:           newTmSubDistrict(db, opts...),
 	}
 }
 
@@ -45,7 +45,7 @@ type Query struct {
 	TmProvince              tmProvince
 	TmRole                  tmRole
 	TmRoleMappingPermission tmRoleMappingPermission
-	TmSubdistrict           tmSubdistrict
+	TmSubDistrict           tmSubDistrict
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -63,7 +63,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		TmProvince:              q.TmProvince.clone(db),
 		TmRole:                  q.TmRole.clone(db),
 		TmRoleMappingPermission: q.TmRoleMappingPermission.clone(db),
-		TmSubdistrict:           q.TmSubdistrict.clone(db),
+		TmSubDistrict:           q.TmSubDistrict.clone(db),
 	}
 }
 
@@ -88,7 +88,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		TmProvince:              q.TmProvince.replaceDB(db),
 		TmRole:                  q.TmRole.replaceDB(db),
 		TmRoleMappingPermission: q.TmRoleMappingPermission.replaceDB(db),
-		TmSubdistrict:           q.TmSubdistrict.replaceDB(db),
+		TmSubDistrict:           q.TmSubDistrict.replaceDB(db),
 	}
 }
 
@@ -103,7 +103,7 @@ type queryCtx struct {
 	TmProvince              *tmProvinceDo
 	TmRole                  *tmRoleDo
 	TmRoleMappingPermission *tmRoleMappingPermissionDo
-	TmSubdistrict           *tmSubdistrictDo
+	TmSubDistrict           *tmSubDistrictDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
@@ -118,7 +118,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		TmProvince:              q.TmProvince.WithContext(ctx),
 		TmRole:                  q.TmRole.WithContext(ctx),
 		TmRoleMappingPermission: q.TmRoleMappingPermission.WithContext(ctx),
-		TmSubdistrict:           q.TmSubdistrict.WithContext(ctx),
+		TmSubDistrict:           q.TmSubDistrict.WithContext(ctx),
 	}
 }
 

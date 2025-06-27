@@ -4,12 +4,12 @@
 
 package model
 
-const TableNameTmCountry = "TmCountry"
+const TableNameTmCountry = "tm_country"
 
-// TmCountry mapped from table <TmCountry>
+// TmCountry mapped from table <tm_country>
 type TmCountry struct {
-	CountryID   int32  `gorm:"column:CountryID;primaryKey;autoIncrement:true" json:"CountryID"`
-	CountryName string `gorm:"column:CountryName;not null" json:"CountryName"`
+	CountryID   int32  `gorm:"column:country_id;primaryKey;autoIncrement:true" json:"country_id"`
+	CountryName string `gorm:"column:country_name;not null" json:"country_name"`
 }
 
 // TableName TmCountry's table name

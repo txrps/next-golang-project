@@ -27,20 +27,20 @@ func newTbRoute(db *gorm.DB, opts ...gen.DOOption) tbRoute {
 
 	tableName := _tbRoute.tbRouteDo.TableName()
 	_tbRoute.ALL = field.NewAsterisk(tableName)
-	_tbRoute.RouteID = field.NewInt32(tableName, "RouteID")
-	_tbRoute.Road = field.NewString(tableName, "Road")
-	_tbRoute.PostcalCode = field.NewString(tableName, "PostcalCode")
-	_tbRoute.CountryID = field.NewInt32(tableName, "CountryID")
-	_tbRoute.ProvinceID = field.NewInt32(tableName, "ProvinceID")
-	_tbRoute.DistrictID = field.NewInt32(tableName, "DistrictID")
-	_tbRoute.SubdistrictID = field.NewInt32(tableName, "SubdistrictID")
-	_tbRoute.Created = field.NewTime(tableName, "Created")
-	_tbRoute.CreateBy = field.NewString(tableName, "CreateBy")
-	_tbRoute.Updated = field.NewTime(tableName, "Updated")
-	_tbRoute.UpdateBy = field.NewString(tableName, "UpdateBy")
-	_tbRoute.Deleted = field.NewTime(tableName, "Deleted")
-	_tbRoute.DeleteBy = field.NewString(tableName, "DeleteBy")
-	_tbRoute.IsDelete = field.NewBool(tableName, "IsDelete")
+	_tbRoute.RouteID = field.NewInt32(tableName, "route_id")
+	_tbRoute.Road = field.NewString(tableName, "road")
+	_tbRoute.PostcalCode = field.NewString(tableName, "postcal_code")
+	_tbRoute.CountryID = field.NewInt32(tableName, "country_id")
+	_tbRoute.ProvinceID = field.NewInt32(tableName, "province_id")
+	_tbRoute.DistrictID = field.NewInt32(tableName, "district_id")
+	_tbRoute.SubDistrictID = field.NewInt32(tableName, "sub_district_id")
+	_tbRoute.CreatedAt = field.NewTime(tableName, "created_at")
+	_tbRoute.CreatedBy = field.NewString(tableName, "created_by")
+	_tbRoute.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_tbRoute.UpdatedBy = field.NewString(tableName, "updated_by")
+	_tbRoute.DeletedAt = field.NewField(tableName, "deleted_at")
+	_tbRoute.DeletedBy = field.NewString(tableName, "deleted_by")
+	_tbRoute.IsDelete = field.NewBool(tableName, "is_delete")
 
 	_tbRoute.fillFieldMap()
 
@@ -57,13 +57,13 @@ type tbRoute struct {
 	CountryID     field.Int32
 	ProvinceID    field.Int32
 	DistrictID    field.Int32
-	SubdistrictID field.Int32
-	Created       field.Time
-	CreateBy      field.String
-	Updated       field.Time
-	UpdateBy      field.String
-	Deleted       field.Time
-	DeleteBy      field.String
+	SubDistrictID field.Int32
+	CreatedAt     field.Time
+	CreatedBy     field.String
+	UpdatedAt     field.Time
+	UpdatedBy     field.String
+	DeletedAt     field.Field
+	DeletedBy     field.String
 	IsDelete      field.Bool
 
 	fieldMap map[string]field.Expr
@@ -81,20 +81,20 @@ func (t tbRoute) As(alias string) *tbRoute {
 
 func (t *tbRoute) updateTableName(table string) *tbRoute {
 	t.ALL = field.NewAsterisk(table)
-	t.RouteID = field.NewInt32(table, "RouteID")
-	t.Road = field.NewString(table, "Road")
-	t.PostcalCode = field.NewString(table, "PostcalCode")
-	t.CountryID = field.NewInt32(table, "CountryID")
-	t.ProvinceID = field.NewInt32(table, "ProvinceID")
-	t.DistrictID = field.NewInt32(table, "DistrictID")
-	t.SubdistrictID = field.NewInt32(table, "SubdistrictID")
-	t.Created = field.NewTime(table, "Created")
-	t.CreateBy = field.NewString(table, "CreateBy")
-	t.Updated = field.NewTime(table, "Updated")
-	t.UpdateBy = field.NewString(table, "UpdateBy")
-	t.Deleted = field.NewTime(table, "Deleted")
-	t.DeleteBy = field.NewString(table, "DeleteBy")
-	t.IsDelete = field.NewBool(table, "IsDelete")
+	t.RouteID = field.NewInt32(table, "route_id")
+	t.Road = field.NewString(table, "road")
+	t.PostcalCode = field.NewString(table, "postcal_code")
+	t.CountryID = field.NewInt32(table, "country_id")
+	t.ProvinceID = field.NewInt32(table, "province_id")
+	t.DistrictID = field.NewInt32(table, "district_id")
+	t.SubDistrictID = field.NewInt32(table, "sub_district_id")
+	t.CreatedAt = field.NewTime(table, "created_at")
+	t.CreatedBy = field.NewString(table, "created_by")
+	t.UpdatedAt = field.NewTime(table, "updated_at")
+	t.UpdatedBy = field.NewString(table, "updated_by")
+	t.DeletedAt = field.NewField(table, "deleted_at")
+	t.DeletedBy = field.NewString(table, "deleted_by")
+	t.IsDelete = field.NewBool(table, "is_delete")
 
 	t.fillFieldMap()
 
@@ -112,20 +112,20 @@ func (t *tbRoute) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 
 func (t *tbRoute) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 14)
-	t.fieldMap["RouteID"] = t.RouteID
-	t.fieldMap["Road"] = t.Road
-	t.fieldMap["PostcalCode"] = t.PostcalCode
-	t.fieldMap["CountryID"] = t.CountryID
-	t.fieldMap["ProvinceID"] = t.ProvinceID
-	t.fieldMap["DistrictID"] = t.DistrictID
-	t.fieldMap["SubdistrictID"] = t.SubdistrictID
-	t.fieldMap["Created"] = t.Created
-	t.fieldMap["CreateBy"] = t.CreateBy
-	t.fieldMap["Updated"] = t.Updated
-	t.fieldMap["UpdateBy"] = t.UpdateBy
-	t.fieldMap["Deleted"] = t.Deleted
-	t.fieldMap["DeleteBy"] = t.DeleteBy
-	t.fieldMap["IsDelete"] = t.IsDelete
+	t.fieldMap["route_id"] = t.RouteID
+	t.fieldMap["road"] = t.Road
+	t.fieldMap["postcal_code"] = t.PostcalCode
+	t.fieldMap["country_id"] = t.CountryID
+	t.fieldMap["province_id"] = t.ProvinceID
+	t.fieldMap["district_id"] = t.DistrictID
+	t.fieldMap["sub_district_id"] = t.SubDistrictID
+	t.fieldMap["created_at"] = t.CreatedAt
+	t.fieldMap["created_by"] = t.CreatedBy
+	t.fieldMap["updated_at"] = t.UpdatedAt
+	t.fieldMap["updated_by"] = t.UpdatedBy
+	t.fieldMap["deleted_at"] = t.DeletedAt
+	t.fieldMap["deleted_by"] = t.DeletedBy
+	t.fieldMap["is_delete"] = t.IsDelete
 }
 
 func (t tbRoute) clone(db *gorm.DB) tbRoute {

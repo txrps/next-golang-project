@@ -27,9 +27,9 @@ func newTmProvince(db *gorm.DB, opts ...gen.DOOption) tmProvince {
 
 	tableName := _tmProvince.tmProvinceDo.TableName()
 	_tmProvince.ALL = field.NewAsterisk(tableName)
-	_tmProvince.ProvinceID = field.NewInt32(tableName, "ProvinceID")
-	_tmProvince.ProvinceName = field.NewString(tableName, "ProvinceName")
-	_tmProvince.CountryID = field.NewInt32(tableName, "CountryID")
+	_tmProvince.ProvinceID = field.NewInt32(tableName, "province_id")
+	_tmProvince.ProvinceName = field.NewString(tableName, "province_name")
+	_tmProvince.CountryID = field.NewInt32(tableName, "country_id")
 
 	_tmProvince.fillFieldMap()
 
@@ -59,9 +59,9 @@ func (t tmProvince) As(alias string) *tmProvince {
 
 func (t *tmProvince) updateTableName(table string) *tmProvince {
 	t.ALL = field.NewAsterisk(table)
-	t.ProvinceID = field.NewInt32(table, "ProvinceID")
-	t.ProvinceName = field.NewString(table, "ProvinceName")
-	t.CountryID = field.NewInt32(table, "CountryID")
+	t.ProvinceID = field.NewInt32(table, "province_id")
+	t.ProvinceName = field.NewString(table, "province_name")
+	t.CountryID = field.NewInt32(table, "country_id")
 
 	t.fillFieldMap()
 
@@ -79,9 +79,9 @@ func (t *tmProvince) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 
 func (t *tmProvince) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 3)
-	t.fieldMap["ProvinceID"] = t.ProvinceID
-	t.fieldMap["ProvinceName"] = t.ProvinceName
-	t.fieldMap["CountryID"] = t.CountryID
+	t.fieldMap["province_id"] = t.ProvinceID
+	t.fieldMap["province_name"] = t.ProvinceName
+	t.fieldMap["country_id"] = t.CountryID
 }
 
 func (t tmProvince) clone(db *gorm.DB) tmProvince {

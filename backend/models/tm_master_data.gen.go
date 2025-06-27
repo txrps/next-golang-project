@@ -27,11 +27,11 @@ func newTmMasterDatum(db *gorm.DB, opts ...gen.DOOption) tmMasterDatum {
 
 	tableName := _tmMasterDatum.tmMasterDatumDo.TableName()
 	_tmMasterDatum.ALL = field.NewAsterisk(tableName)
-	_tmMasterDatum.MasterDataID = field.NewInt32(tableName, "MasterDataID")
-	_tmMasterDatum.MasterDataName = field.NewString(tableName, "MasterDataName")
-	_tmMasterDatum.IsActive = field.NewBool(tableName, "IsActive")
-	_tmMasterDatum.MasterDataTypeID = field.NewInt32(tableName, "MasterDataTypeID")
-	_tmMasterDatum.Code = field.NewString(tableName, "Code")
+	_tmMasterDatum.MasterDataID = field.NewInt32(tableName, "master_data_id")
+	_tmMasterDatum.MasterDataName = field.NewString(tableName, "master_data_name")
+	_tmMasterDatum.IsActive = field.NewBool(tableName, "is_active")
+	_tmMasterDatum.MasterDataTypeID = field.NewInt32(tableName, "master_data_type_id")
+	_tmMasterDatum.Code = field.NewString(tableName, "code")
 
 	_tmMasterDatum.fillFieldMap()
 
@@ -63,11 +63,11 @@ func (t tmMasterDatum) As(alias string) *tmMasterDatum {
 
 func (t *tmMasterDatum) updateTableName(table string) *tmMasterDatum {
 	t.ALL = field.NewAsterisk(table)
-	t.MasterDataID = field.NewInt32(table, "MasterDataID")
-	t.MasterDataName = field.NewString(table, "MasterDataName")
-	t.IsActive = field.NewBool(table, "IsActive")
-	t.MasterDataTypeID = field.NewInt32(table, "MasterDataTypeID")
-	t.Code = field.NewString(table, "Code")
+	t.MasterDataID = field.NewInt32(table, "master_data_id")
+	t.MasterDataName = field.NewString(table, "master_data_name")
+	t.IsActive = field.NewBool(table, "is_active")
+	t.MasterDataTypeID = field.NewInt32(table, "master_data_type_id")
+	t.Code = field.NewString(table, "code")
 
 	t.fillFieldMap()
 
@@ -85,11 +85,11 @@ func (t *tmMasterDatum) GetFieldByName(fieldName string) (field.OrderExpr, bool)
 
 func (t *tmMasterDatum) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 5)
-	t.fieldMap["MasterDataID"] = t.MasterDataID
-	t.fieldMap["MasterDataName"] = t.MasterDataName
-	t.fieldMap["IsActive"] = t.IsActive
-	t.fieldMap["MasterDataTypeID"] = t.MasterDataTypeID
-	t.fieldMap["Code"] = t.Code
+	t.fieldMap["master_data_id"] = t.MasterDataID
+	t.fieldMap["master_data_name"] = t.MasterDataName
+	t.fieldMap["is_active"] = t.IsActive
+	t.fieldMap["master_data_type_id"] = t.MasterDataTypeID
+	t.fieldMap["code"] = t.Code
 }
 
 func (t tmMasterDatum) clone(db *gorm.DB) tmMasterDatum {

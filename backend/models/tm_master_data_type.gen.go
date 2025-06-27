@@ -27,8 +27,8 @@ func newTmMasterDataType(db *gorm.DB, opts ...gen.DOOption) tmMasterDataType {
 
 	tableName := _tmMasterDataType.tmMasterDataTypeDo.TableName()
 	_tmMasterDataType.ALL = field.NewAsterisk(tableName)
-	_tmMasterDataType.MasterDataTypeID = field.NewInt32(tableName, "MasterDataTypeID")
-	_tmMasterDataType.MasterDataTypeName = field.NewString(tableName, "MasterDataTypeName")
+	_tmMasterDataType.MasterDataTypeID = field.NewInt32(tableName, "master_data_type_id")
+	_tmMasterDataType.MasterDataTypeName = field.NewString(tableName, "master_data_type_name")
 
 	_tmMasterDataType.fillFieldMap()
 
@@ -57,8 +57,8 @@ func (t tmMasterDataType) As(alias string) *tmMasterDataType {
 
 func (t *tmMasterDataType) updateTableName(table string) *tmMasterDataType {
 	t.ALL = field.NewAsterisk(table)
-	t.MasterDataTypeID = field.NewInt32(table, "MasterDataTypeID")
-	t.MasterDataTypeName = field.NewString(table, "MasterDataTypeName")
+	t.MasterDataTypeID = field.NewInt32(table, "master_data_type_id")
+	t.MasterDataTypeName = field.NewString(table, "master_data_type_name")
 
 	t.fillFieldMap()
 
@@ -76,8 +76,8 @@ func (t *tmMasterDataType) GetFieldByName(fieldName string) (field.OrderExpr, bo
 
 func (t *tmMasterDataType) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 2)
-	t.fieldMap["MasterDataTypeID"] = t.MasterDataTypeID
-	t.fieldMap["MasterDataTypeName"] = t.MasterDataTypeName
+	t.fieldMap["master_data_type_id"] = t.MasterDataTypeID
+	t.fieldMap["master_data_type_name"] = t.MasterDataTypeName
 }
 
 func (t tmMasterDataType) clone(db *gorm.DB) tmMasterDataType {

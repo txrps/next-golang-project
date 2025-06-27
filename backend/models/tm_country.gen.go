@@ -27,8 +27,8 @@ func newTmCountry(db *gorm.DB, opts ...gen.DOOption) tmCountry {
 
 	tableName := _tmCountry.tmCountryDo.TableName()
 	_tmCountry.ALL = field.NewAsterisk(tableName)
-	_tmCountry.CountryID = field.NewInt32(tableName, "CountryID")
-	_tmCountry.CountryName = field.NewString(tableName, "CountryName")
+	_tmCountry.CountryID = field.NewInt32(tableName, "country_id")
+	_tmCountry.CountryName = field.NewString(tableName, "country_name")
 
 	_tmCountry.fillFieldMap()
 
@@ -57,8 +57,8 @@ func (t tmCountry) As(alias string) *tmCountry {
 
 func (t *tmCountry) updateTableName(table string) *tmCountry {
 	t.ALL = field.NewAsterisk(table)
-	t.CountryID = field.NewInt32(table, "CountryID")
-	t.CountryName = field.NewString(table, "CountryName")
+	t.CountryID = field.NewInt32(table, "country_id")
+	t.CountryName = field.NewString(table, "country_name")
 
 	t.fillFieldMap()
 
@@ -76,8 +76,8 @@ func (t *tmCountry) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 
 func (t *tmCountry) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 2)
-	t.fieldMap["CountryID"] = t.CountryID
-	t.fieldMap["CountryName"] = t.CountryName
+	t.fieldMap["country_id"] = t.CountryID
+	t.fieldMap["country_name"] = t.CountryName
 }
 
 func (t tmCountry) clone(db *gorm.DB) tmCountry {

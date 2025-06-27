@@ -27,20 +27,20 @@ func newTbGenerateBarcode(db *gorm.DB, opts ...gen.DOOption) tbGenerateBarcode {
 
 	tableName := _tbGenerateBarcode.tbGenerateBarcodeDo.TableName()
 	_tbGenerateBarcode.ALL = field.NewAsterisk(tableName)
-	_tbGenerateBarcode.GenerateID = field.NewInt32(tableName, "GenerateID")
-	_tbGenerateBarcode.MailTypeID = field.NewInt32(tableName, "MailTypeID")
-	_tbGenerateBarcode.Year = field.NewInt32(tableName, "Year")
-	_tbGenerateBarcode.BarcodeFrom = field.NewString(tableName, "BarcodeFrom")
-	_tbGenerateBarcode.BarcodeTo = field.NewString(tableName, "BarcodeTo")
-	_tbGenerateBarcode.Quality = field.NewInt64(tableName, "Quality")
-	_tbGenerateBarcode.DocTypeID = field.NewInt32(tableName, "DocTypeID")
-	_tbGenerateBarcode.Created = field.NewTime(tableName, "Created")
-	_tbGenerateBarcode.CreateBy = field.NewString(tableName, "CreateBy")
-	_tbGenerateBarcode.Updated = field.NewTime(tableName, "Updated")
-	_tbGenerateBarcode.UpdateBy = field.NewString(tableName, "UpdateBy")
-	_tbGenerateBarcode.Deleted = field.NewTime(tableName, "Deleted")
-	_tbGenerateBarcode.DeleteBy = field.NewString(tableName, "DeleteBy")
-	_tbGenerateBarcode.IsDelete = field.NewBool(tableName, "IsDelete")
+	_tbGenerateBarcode.GenerateID = field.NewInt32(tableName, "generate_id")
+	_tbGenerateBarcode.MailTypeID = field.NewInt32(tableName, "mail_type_id")
+	_tbGenerateBarcode.Year = field.NewInt32(tableName, "year")
+	_tbGenerateBarcode.BarcodeFrom = field.NewString(tableName, "barcode_from")
+	_tbGenerateBarcode.BarcodeTo = field.NewString(tableName, "barcode_to")
+	_tbGenerateBarcode.Quality = field.NewInt64(tableName, "quality")
+	_tbGenerateBarcode.DocTypeID = field.NewInt32(tableName, "doc_type_id")
+	_tbGenerateBarcode.CreatedAt = field.NewTime(tableName, "created_at")
+	_tbGenerateBarcode.CreatedBy = field.NewString(tableName, "created_by")
+	_tbGenerateBarcode.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_tbGenerateBarcode.UpdatedBy = field.NewString(tableName, "updated_by")
+	_tbGenerateBarcode.DeletedAt = field.NewField(tableName, "deleted_at")
+	_tbGenerateBarcode.DeletedBy = field.NewString(tableName, "deleted_by")
+	_tbGenerateBarcode.IsDelete = field.NewBool(tableName, "is_delete")
 
 	_tbGenerateBarcode.fillFieldMap()
 
@@ -58,12 +58,12 @@ type tbGenerateBarcode struct {
 	BarcodeTo   field.String
 	Quality     field.Int64
 	DocTypeID   field.Int32
-	Created     field.Time
-	CreateBy    field.String
-	Updated     field.Time
-	UpdateBy    field.String
-	Deleted     field.Time
-	DeleteBy    field.String
+	CreatedAt   field.Time
+	CreatedBy   field.String
+	UpdatedAt   field.Time
+	UpdatedBy   field.String
+	DeletedAt   field.Field
+	DeletedBy   field.String
 	IsDelete    field.Bool
 
 	fieldMap map[string]field.Expr
@@ -81,20 +81,20 @@ func (t tbGenerateBarcode) As(alias string) *tbGenerateBarcode {
 
 func (t *tbGenerateBarcode) updateTableName(table string) *tbGenerateBarcode {
 	t.ALL = field.NewAsterisk(table)
-	t.GenerateID = field.NewInt32(table, "GenerateID")
-	t.MailTypeID = field.NewInt32(table, "MailTypeID")
-	t.Year = field.NewInt32(table, "Year")
-	t.BarcodeFrom = field.NewString(table, "BarcodeFrom")
-	t.BarcodeTo = field.NewString(table, "BarcodeTo")
-	t.Quality = field.NewInt64(table, "Quality")
-	t.DocTypeID = field.NewInt32(table, "DocTypeID")
-	t.Created = field.NewTime(table, "Created")
-	t.CreateBy = field.NewString(table, "CreateBy")
-	t.Updated = field.NewTime(table, "Updated")
-	t.UpdateBy = field.NewString(table, "UpdateBy")
-	t.Deleted = field.NewTime(table, "Deleted")
-	t.DeleteBy = field.NewString(table, "DeleteBy")
-	t.IsDelete = field.NewBool(table, "IsDelete")
+	t.GenerateID = field.NewInt32(table, "generate_id")
+	t.MailTypeID = field.NewInt32(table, "mail_type_id")
+	t.Year = field.NewInt32(table, "year")
+	t.BarcodeFrom = field.NewString(table, "barcode_from")
+	t.BarcodeTo = field.NewString(table, "barcode_to")
+	t.Quality = field.NewInt64(table, "quality")
+	t.DocTypeID = field.NewInt32(table, "doc_type_id")
+	t.CreatedAt = field.NewTime(table, "created_at")
+	t.CreatedBy = field.NewString(table, "created_by")
+	t.UpdatedAt = field.NewTime(table, "updated_at")
+	t.UpdatedBy = field.NewString(table, "updated_by")
+	t.DeletedAt = field.NewField(table, "deleted_at")
+	t.DeletedBy = field.NewString(table, "deleted_by")
+	t.IsDelete = field.NewBool(table, "is_delete")
 
 	t.fillFieldMap()
 
@@ -112,20 +112,20 @@ func (t *tbGenerateBarcode) GetFieldByName(fieldName string) (field.OrderExpr, b
 
 func (t *tbGenerateBarcode) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 14)
-	t.fieldMap["GenerateID"] = t.GenerateID
-	t.fieldMap["MailTypeID"] = t.MailTypeID
-	t.fieldMap["Year"] = t.Year
-	t.fieldMap["BarcodeFrom"] = t.BarcodeFrom
-	t.fieldMap["BarcodeTo"] = t.BarcodeTo
-	t.fieldMap["Quality"] = t.Quality
-	t.fieldMap["DocTypeID"] = t.DocTypeID
-	t.fieldMap["Created"] = t.Created
-	t.fieldMap["CreateBy"] = t.CreateBy
-	t.fieldMap["Updated"] = t.Updated
-	t.fieldMap["UpdateBy"] = t.UpdateBy
-	t.fieldMap["Deleted"] = t.Deleted
-	t.fieldMap["DeleteBy"] = t.DeleteBy
-	t.fieldMap["IsDelete"] = t.IsDelete
+	t.fieldMap["generate_id"] = t.GenerateID
+	t.fieldMap["mail_type_id"] = t.MailTypeID
+	t.fieldMap["year"] = t.Year
+	t.fieldMap["barcode_from"] = t.BarcodeFrom
+	t.fieldMap["barcode_to"] = t.BarcodeTo
+	t.fieldMap["quality"] = t.Quality
+	t.fieldMap["doc_type_id"] = t.DocTypeID
+	t.fieldMap["created_at"] = t.CreatedAt
+	t.fieldMap["created_by"] = t.CreatedBy
+	t.fieldMap["updated_at"] = t.UpdatedAt
+	t.fieldMap["updated_by"] = t.UpdatedBy
+	t.fieldMap["deleted_at"] = t.DeletedAt
+	t.fieldMap["deleted_by"] = t.DeletedBy
+	t.fieldMap["is_delete"] = t.IsDelete
 }
 
 func (t tbGenerateBarcode) clone(db *gorm.DB) tbGenerateBarcode {

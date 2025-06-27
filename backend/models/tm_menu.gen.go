@@ -27,21 +27,21 @@ func newTmMenu(db *gorm.DB, opts ...gen.DOOption) tmMenu {
 
 	tableName := _tmMenu.tmMenuDo.TableName()
 	_tmMenu.ALL = field.NewAsterisk(tableName)
-	_tmMenu.MenuID = field.NewInt32(tableName, "MenuID")
-	_tmMenu.ParentID = field.NewInt32(tableName, "ParentID")
-	_tmMenu.MenuName = field.NewString(tableName, "MenuName")
-	_tmMenu.MenuType = field.NewInt32(tableName, "MenuType")
-	_tmMenu.Level = field.NewInt32(tableName, "Level")
-	_tmMenu.Route = field.NewString(tableName, "Route")
-	_tmMenu.Icon = field.NewString(tableName, "Icon")
-	_tmMenu.IsDisplay = field.NewBool(tableName, "IsDisplay")
-	_tmMenu.IsSetPermission = field.NewBool(tableName, "IsSetPermission")
-	_tmMenu.IsDisable = field.NewBool(tableName, "IsDisable")
-	_tmMenu.IsView = field.NewBool(tableName, "IsView")
-	_tmMenu.IsManage = field.NewBool(tableName, "IsManage")
-	_tmMenu.IsShowbreadcrumb = field.NewBool(tableName, "IsShowbreadcrumb")
-	_tmMenu.IsActive = field.NewBool(tableName, "IsActive")
-	_tmMenu.Order_ = field.NewFloat64(tableName, "Order")
+	_tmMenu.MenuID = field.NewInt32(tableName, "menu_id")
+	_tmMenu.ParentID = field.NewInt32(tableName, "parent_id")
+	_tmMenu.MenuName = field.NewString(tableName, "menu_name")
+	_tmMenu.MenuType = field.NewInt32(tableName, "menu_type")
+	_tmMenu.Level = field.NewInt32(tableName, "level")
+	_tmMenu.Route = field.NewString(tableName, "route")
+	_tmMenu.Icon = field.NewString(tableName, "icon")
+	_tmMenu.IsDisplay = field.NewBool(tableName, "is_display")
+	_tmMenu.IsSetPermission = field.NewBool(tableName, "is_set_permission")
+	_tmMenu.IsDisable = field.NewBool(tableName, "is_disable")
+	_tmMenu.IsView = field.NewBool(tableName, "is_view")
+	_tmMenu.IsManage = field.NewBool(tableName, "is_manage")
+	_tmMenu.IsShowbreadcrumb = field.NewBool(tableName, "is_showbreadcrumb")
+	_tmMenu.IsActive = field.NewBool(tableName, "is_active")
+	_tmMenu.Order_ = field.NewFloat64(tableName, "order")
 
 	_tmMenu.fillFieldMap()
 
@@ -83,21 +83,21 @@ func (t tmMenu) As(alias string) *tmMenu {
 
 func (t *tmMenu) updateTableName(table string) *tmMenu {
 	t.ALL = field.NewAsterisk(table)
-	t.MenuID = field.NewInt32(table, "MenuID")
-	t.ParentID = field.NewInt32(table, "ParentID")
-	t.MenuName = field.NewString(table, "MenuName")
-	t.MenuType = field.NewInt32(table, "MenuType")
-	t.Level = field.NewInt32(table, "Level")
-	t.Route = field.NewString(table, "Route")
-	t.Icon = field.NewString(table, "Icon")
-	t.IsDisplay = field.NewBool(table, "IsDisplay")
-	t.IsSetPermission = field.NewBool(table, "IsSetPermission")
-	t.IsDisable = field.NewBool(table, "IsDisable")
-	t.IsView = field.NewBool(table, "IsView")
-	t.IsManage = field.NewBool(table, "IsManage")
-	t.IsShowbreadcrumb = field.NewBool(table, "IsShowbreadcrumb")
-	t.IsActive = field.NewBool(table, "IsActive")
-	t.Order_ = field.NewFloat64(table, "Order")
+	t.MenuID = field.NewInt32(table, "menu_id")
+	t.ParentID = field.NewInt32(table, "parent_id")
+	t.MenuName = field.NewString(table, "menu_name")
+	t.MenuType = field.NewInt32(table, "menu_type")
+	t.Level = field.NewInt32(table, "level")
+	t.Route = field.NewString(table, "route")
+	t.Icon = field.NewString(table, "icon")
+	t.IsDisplay = field.NewBool(table, "is_display")
+	t.IsSetPermission = field.NewBool(table, "is_set_permission")
+	t.IsDisable = field.NewBool(table, "is_disable")
+	t.IsView = field.NewBool(table, "is_view")
+	t.IsManage = field.NewBool(table, "is_manage")
+	t.IsShowbreadcrumb = field.NewBool(table, "is_showbreadcrumb")
+	t.IsActive = field.NewBool(table, "is_active")
+	t.Order_ = field.NewFloat64(table, "order")
 
 	t.fillFieldMap()
 
@@ -115,21 +115,21 @@ func (t *tmMenu) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 
 func (t *tmMenu) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 15)
-	t.fieldMap["MenuID"] = t.MenuID
-	t.fieldMap["ParentID"] = t.ParentID
-	t.fieldMap["MenuName"] = t.MenuName
-	t.fieldMap["MenuType"] = t.MenuType
-	t.fieldMap["Level"] = t.Level
-	t.fieldMap["Route"] = t.Route
-	t.fieldMap["Icon"] = t.Icon
-	t.fieldMap["IsDisplay"] = t.IsDisplay
-	t.fieldMap["IsSetPermission"] = t.IsSetPermission
-	t.fieldMap["IsDisable"] = t.IsDisable
-	t.fieldMap["IsView"] = t.IsView
-	t.fieldMap["IsManage"] = t.IsManage
-	t.fieldMap["IsShowbreadcrumb"] = t.IsShowbreadcrumb
-	t.fieldMap["IsActive"] = t.IsActive
-	t.fieldMap["Order"] = t.Order_
+	t.fieldMap["menu_id"] = t.MenuID
+	t.fieldMap["parent_id"] = t.ParentID
+	t.fieldMap["menu_name"] = t.MenuName
+	t.fieldMap["menu_type"] = t.MenuType
+	t.fieldMap["level"] = t.Level
+	t.fieldMap["route"] = t.Route
+	t.fieldMap["icon"] = t.Icon
+	t.fieldMap["is_display"] = t.IsDisplay
+	t.fieldMap["is_set_permission"] = t.IsSetPermission
+	t.fieldMap["is_disable"] = t.IsDisable
+	t.fieldMap["is_view"] = t.IsView
+	t.fieldMap["is_manage"] = t.IsManage
+	t.fieldMap["is_showbreadcrumb"] = t.IsShowbreadcrumb
+	t.fieldMap["is_active"] = t.IsActive
+	t.fieldMap["order"] = t.Order_
 }
 
 func (t tmMenu) clone(db *gorm.DB) tmMenu {

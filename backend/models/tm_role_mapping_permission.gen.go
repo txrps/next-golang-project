@@ -27,9 +27,9 @@ func newTmRoleMappingPermission(db *gorm.DB, opts ...gen.DOOption) tmRoleMapping
 
 	tableName := _tmRoleMappingPermission.tmRoleMappingPermissionDo.TableName()
 	_tmRoleMappingPermission.ALL = field.NewAsterisk(tableName)
-	_tmRoleMappingPermission.RoleID = field.NewInt32(tableName, "RoleID")
-	_tmRoleMappingPermission.MenuID = field.NewInt32(tableName, "MenuID")
-	_tmRoleMappingPermission.Permission = field.NewInt32(tableName, "Permission")
+	_tmRoleMappingPermission.RoleID = field.NewInt32(tableName, "role_id")
+	_tmRoleMappingPermission.MenuID = field.NewInt32(tableName, "menu_id")
+	_tmRoleMappingPermission.Permission = field.NewInt32(tableName, "permission")
 
 	_tmRoleMappingPermission.fillFieldMap()
 
@@ -59,9 +59,9 @@ func (t tmRoleMappingPermission) As(alias string) *tmRoleMappingPermission {
 
 func (t *tmRoleMappingPermission) updateTableName(table string) *tmRoleMappingPermission {
 	t.ALL = field.NewAsterisk(table)
-	t.RoleID = field.NewInt32(table, "RoleID")
-	t.MenuID = field.NewInt32(table, "MenuID")
-	t.Permission = field.NewInt32(table, "Permission")
+	t.RoleID = field.NewInt32(table, "role_id")
+	t.MenuID = field.NewInt32(table, "menu_id")
+	t.Permission = field.NewInt32(table, "permission")
 
 	t.fillFieldMap()
 
@@ -79,9 +79,9 @@ func (t *tmRoleMappingPermission) GetFieldByName(fieldName string) (field.OrderE
 
 func (t *tmRoleMappingPermission) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 3)
-	t.fieldMap["RoleID"] = t.RoleID
-	t.fieldMap["MenuID"] = t.MenuID
-	t.fieldMap["Permission"] = t.Permission
+	t.fieldMap["role_id"] = t.RoleID
+	t.fieldMap["menu_id"] = t.MenuID
+	t.fieldMap["permission"] = t.Permission
 }
 
 func (t tmRoleMappingPermission) clone(db *gorm.DB) tmRoleMappingPermission {

@@ -27,9 +27,9 @@ func newTmRole(db *gorm.DB, opts ...gen.DOOption) tmRole {
 
 	tableName := _tmRole.tmRoleDo.TableName()
 	_tmRole.ALL = field.NewAsterisk(tableName)
-	_tmRole.RoleID = field.NewInt32(tableName, "RoleID")
-	_tmRole.RoleName = field.NewString(tableName, "RoleName")
-	_tmRole.IsActive = field.NewBool(tableName, "IsActive")
+	_tmRole.RoleID = field.NewInt32(tableName, "role_id")
+	_tmRole.RoleName = field.NewString(tableName, "role_name")
+	_tmRole.IsActive = field.NewBool(tableName, "is_active")
 
 	_tmRole.fillFieldMap()
 
@@ -59,9 +59,9 @@ func (t tmRole) As(alias string) *tmRole {
 
 func (t *tmRole) updateTableName(table string) *tmRole {
 	t.ALL = field.NewAsterisk(table)
-	t.RoleID = field.NewInt32(table, "RoleID")
-	t.RoleName = field.NewString(table, "RoleName")
-	t.IsActive = field.NewBool(table, "IsActive")
+	t.RoleID = field.NewInt32(table, "role_id")
+	t.RoleName = field.NewString(table, "role_name")
+	t.IsActive = field.NewBool(table, "is_active")
 
 	t.fillFieldMap()
 
@@ -79,9 +79,9 @@ func (t *tmRole) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 
 func (t *tmRole) fillFieldMap() {
 	t.fieldMap = make(map[string]field.Expr, 3)
-	t.fieldMap["RoleID"] = t.RoleID
-	t.fieldMap["RoleName"] = t.RoleName
-	t.fieldMap["IsActive"] = t.IsActive
+	t.fieldMap["role_id"] = t.RoleID
+	t.fieldMap["role_name"] = t.RoleName
+	t.fieldMap["is_active"] = t.IsActive
 }
 
 func (t tmRole) clone(db *gorm.DB) tmRole {
