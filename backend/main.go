@@ -15,12 +15,8 @@ import (
 	_ "github.com/txrps/next-golang-project/docs"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/txrps/next-golang-project/config"
 	"github.com/txrps/next-golang-project/database"
-	"github.com/txrps/next-golang-project/internal/handlers"
-	"github.com/txrps/next-golang-project/internal/routes"
 	"gorm.io/gen"
 	"gorm.io/gorm"
 )
@@ -69,32 +65,32 @@ func main() {
 	}
 	defer sqlDB.Close()
 
-	r := router()
+	// r := router()
 
-	handler := handlers.NewHandler(db)
-	routes.SetUpRoutes(r, handler)
+	// handler := handlers.NewHandler(db)
+	// routes.SetUpRoutes(r, handler)
 
-	serverAddr := fmt.Sprintf(":%s", config.ServerPort)
-	server := &http.Server{
-		Addr:              serverAddr,
-		Handler:           r,
-		ReadHeaderTimeout: serverReadHeaderTimeout,
-		ReadTimeout:       serverReadTimeout,
-		WriteTimeout:      serverWriteTimeout,
-		MaxHeaderBytes:    1 << 20,
-	}
+	// serverAddr := fmt.Sprintf(":%s", config.ServerPort)
+	// server := &http.Server{
+	// 	Addr:              serverAddr,
+	// 	Handler:           r,
+	// 	ReadHeaderTimeout: serverReadHeaderTimeout,
+	// 	ReadTimeout:       serverReadTimeout,
+	// 	WriteTimeout:      serverWriteTimeout,
+	// 	MaxHeaderBytes:    1 << 20,
+	// }
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	fmt.Printf("Server is up and running on PORT %s\n", serverAddr)
-	if config.Environment == "development" {
-		time.Sleep(1 * time.Second)
-		openBrowser("http://localhost:" + config.ServerPort + "/swagger/index.html")
-	}
+	// fmt.Printf("Server is up and running on PORT %s\n", serverAddr)
+	// if config.Environment == "development" {
+	// 	time.Sleep(1 * time.Second)
+	// 	openBrowser("http://localhost:" + config.ServerPort + "/swagger/index.html")
+	// }
 
-	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("Server failed %v", err)
-	}
+	// if err := server.ListenAndServe(); err != nil {
+	// 	log.Fatalf("Server failed %v", err)
+	// }
 
 }
 
