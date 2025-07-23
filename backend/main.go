@@ -12,13 +12,9 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/txrps/next-golang-project/docs"
-
 	"github.com/gin-gonic/gin"
 	"github.com/txrps/next-golang-project/config"
 	"github.com/txrps/next-golang-project/database"
-	"gorm.io/gen"
-	"gorm.io/gorm"
 )
 
 const (
@@ -58,7 +54,6 @@ func main() {
 	}
 
 	db := database.ConnectDB(config.DatabaseURL)
-	generateDB(db)
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatalf("Failed to get underlying DB: %v", err)
@@ -125,19 +120,6 @@ func openBrowser(url string) {
 	if err != nil {
 		log.Printf("Failed to open browser: %v\n", err)
 	}
-}
-
-func generateDB(DB *gorm.DB) {
-	g := gen.NewGenerator(gen.Config{
-		OutPath: "./models",
-		Mode:    gen.WithoutContext,
-	})
-
-	g.UseDB(DB)
-	g.ApplyBasic(
-		g.GenerateAllTable()...,
-	)
-	g.Execute()
 }
 
 func router() *gin.Engine {
